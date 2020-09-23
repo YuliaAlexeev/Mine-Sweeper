@@ -10,7 +10,7 @@ var gBoard;
 
 //level
 var gLevel = {
-    SIZE: 4,
+    SIZE: 3,
     MINES: 2,
 };
 
@@ -65,8 +65,8 @@ function buildBoard() {
         }
     }
 
+    //setMinesNegsCount(board)
     renderMine(board);
-    
     console.table(board);
     return board;
 }
@@ -79,24 +79,31 @@ function renderMine(board){
     
     for(var i=0; i<gLevel.MINES; i++){
         //debugger;
-        var randomNum = getRandomIntInclusive(0, gLevel.SIZE-1);
-        board[randomNum][randomNum] = createCell(4, true, false, true, MINE);    
+        
+        board[getRandomIntInclusive(0, gLevel.SIZE-1)][getRandomIntInclusive(0, gLevel.SIZE-1)] = createCell(4, true, false, true, MINE);    
     }
 }
 
 function setMinesNegsCount(board) {
     //TO DO count mines around each cell and set the minesAroundCount.
-   
-    
+
     for(var i=0; i<board.length; i++){
         for(var j=0; j<board[i].length; j++){
-            var res = getCountOfMineNegs(board, {i:i,j:j});
-            //board[i][j] = res;
-            console.log('res',res)
+            if(getCellTypeFromBoard(board, i , j) != MINE){
+
+                var res = getCountOfMineNegs(board, {i:i,j:j});
+                //board[i][j] = res;
+                if(res > 0){
+                    board[i][j] = createCell(4, true, false, true, res);
+                }
+                
+                console.log('res',res)
+            }
         }
     }
-   // console.log('ddd', res)
-
+   console.table('setMinesNegsCount', board)
+   renderBoard(board)
+   return board;
 }
 
 
@@ -107,14 +114,9 @@ function getCountOfMineNegs(board, pos) {
         for (var j = pos.j-1; j <= pos.j+1; j++) {
             if (j < 0 || j >= board[i].length) continue;
             if (i === pos.i && j === pos.j) continue;
-            var cell = gBoard[i][j];
-            //console.log(cell.cellType)
-            if (cell.cellType === MINE) {
+            if (getCellTypeFromBoard(board, i , j) === MINE) {   
                 count++;
-                //console.log('inner mine negs', count)
-            }
-           
-            
+            }     
         }
     }
     
