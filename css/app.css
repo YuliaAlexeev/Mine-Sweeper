@@ -1,0 +1,28 @@
+body {
+  background-color: #f1e3dd;
+  color:#454140;
+}
+h1{
+  text-align: center;
+}
+table{
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid pink;
+}
+.game-board tr td{
+  width: 30px;
+  height: 30px;
+  background-color: aliceblue;
+  text-align: center;
+  cursor: pointer;
+}
+.game-board tr td:hover{
+  background-color: lightsteelblue;
+}
+.game-main{
+  margin: 0px auto;
+  width: 300px;
+}
+
