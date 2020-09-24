@@ -5,23 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mine Sweeper</title>
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="initGame()" oncontextmenu="return false;">
+<body onload="initGame(4,2)" oncontextmenu="return false;">
     <div class="game">
         <header><h1>Mine Sweeper</h1></header>
         <div class="game-main">
-            <div class="game-timer">// to do timer</div>
+            <div class="game-timer"></div>
+            <div><button onClick="reset()" class="smiley"></button></div>
             <div class="game-level">
             <h2>Choose your level:</h2>
-            <button class="btn btn-level" onClick="initLevel(4)">Begginner(4)</button>
-            <button class="btn btn-level" onClick="initLevel(8)">Medium(8)</button>
-            <button class="btn btn-level" onClick="initLevel(12)">Extreme(12)</button>
+            <button class="btn btn-level" onClick="initGame(4,2)">Begginner(4)</button>
+            <button class="btn btn-level" onClick="initGame(8,12)">Medium(8)</button>
+            <button class="btn btn-level" onClick="initGame(12,30)">Extreme(12)</button>
+            
             </div>
             <table class="game-board"></table> 
         </div>      
         <footer></footer>
     </div>
     <script src="js/game.js"></script>
+    <script src="js/utils.js"></script>
 </body>
 </html>
