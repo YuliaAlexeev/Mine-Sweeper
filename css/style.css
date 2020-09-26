@@ -2,27 +2,36 @@ body {
   background-color: #f1e3dd;
   color:#454140;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
-
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+h1{
+  font-size: 37px;
+}
 table{
   border-collapse: collapse;
 }
 table, th, td {
   border: 1px solid #6d6875;
 }
-button{
+button, td{
   cursor: pointer;
 }
 .game-board tr td{
   width: 30px;
   height: 30px;
-  cursor: pointer;
 }
 .game-main{
   margin: 0px auto;
   display: flex;
   align-items: center;
   flex-direction: column;
+  flex: 1 0 auto;
 }
 .hide{
   background-color: #cb997e;
@@ -36,6 +45,9 @@ button{
 .game-level{
   margin-bottom: 10px;
 }
+.game-timer {
+  margin: 10px 0;
+}
 .btn{
   padding: 5px 10px;
   border: 0;
@@ -47,4 +59,10 @@ button{
 }
 .smiley {
   font-size: 30px;
+  
+}
+footer{
+  flex-shrink: 0; 
+  padding: 10px;
+  background-color: #e5989b;
 }

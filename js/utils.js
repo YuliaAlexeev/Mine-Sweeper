@@ -6,8 +6,8 @@ function renderBoard(board) {
         for (var j = 0; j < board[0].length; j++) {
             var cell = board[i][j];
             var className = 'cell' + i + '-' + j;
-            var hide
-            htmlStr += '<td class="' + className + ' hide" onclick="cellClicked(this, '+i+', '+j+')" oncontextmenu="cellMarked(this, '+i+', '+j+')" >' + renderCell(cell) + '</td>';
+            var hide = cell.isShown ? '' : 'hide';
+            htmlStr += '<td class="' + className + ' ' + hide + '" onclick="cellClicked(this, '+i+', '+j+')" oncontextmenu="cellMarked(this, '+i+', '+j+')" >' + renderCell(cell) + '</td>';
         }
         htmlStr += '</tr>';
     }

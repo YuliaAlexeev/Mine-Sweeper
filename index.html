@@ -8,22 +8,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body onload="initGame(4,2)" oncontextmenu="return false;">
-    <div class="game">
+   
         <header><h1>Mine Sweeper</h1></header>
         <div class="game-main">
             <div class="game-timer"></div>
+            <div>
+                <!-- <span class="game-timer-icon">⏱ </span> -->
+            </div>
             <div><button onClick="reset()" class="smiley"></button></div>
             <div class="game-level">
             <h2>Choose your level:</h2>
-            <button class="btn btn-level" onClick="initGame(4,2)">Begginner(4)</button>
-            <button class="btn btn-level" onClick="initGame(8,12)">Medium(8)</button>
-            <button class="btn btn-level" onClick="initGame(12,30)">Extreme(12)</button>
+            <button class="btn btn-level" onClick="initGame(4,2)">Begginner</button>
+            <button class="btn btn-level" onClick="initGame(8,12)">Medium</button>
+            <button class="btn btn-level" onClick="initGame(12,30)">Extreme</button>
             
             </div>
             <table class="game-board"></table> 
         </div>      
-        <footer></footer>
-    </div>
+        <footer>Made By Yulia Alexeev</footer>
+    
     <script src="js/game.js"></script>
     <script src="js/utils.js"></script>
 </body>
