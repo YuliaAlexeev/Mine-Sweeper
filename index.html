@@ -7,26 +7,29 @@
     <title>Mine Sweeper</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="initGame(4,2)" oncontextmenu="return false;">
-   
-        <header><h1>Mine Sweeper</h1></header>
-        <div class="game-main">
-            <div class="game-timer"></div>
-            <div>
-                <!-- <span class="game-timer-icon">⏱ </span> -->
+<body onload="initGame(8,12)" oncontextmenu="return false;">
+    <header class="header"><h1>Mine Sweeper</h1></header>
+    <div class="game-main">
+        <div class="game-show">
+            <div class="timer">
+                <h3>Timer</h3>
+                <div class="game-timer"></div>
             </div>
-            <div><button onClick="reset()" class="smiley"></button></div>
-            <div class="game-level">
-            <h2>Choose your level:</h2>
+            <div class="lives">
+                <h3>Lives</h3>
+                <div class="game-lives"></div>
+            </div>
+        </div>
+        <button onClick="reset()" class="smiley"></button>
+        <div class="game-level">
+            <h2>Choose your level</h2>
             <button class="btn btn-level" onClick="initGame(4,2)">Begginner</button>
             <button class="btn btn-level" onClick="initGame(8,12)">Medium</button>
             <button class="btn btn-level" onClick="initGame(12,30)">Extreme</button>
-            
-            </div>
-            <table class="game-board"></table> 
-        </div>      
-        <footer>Made By Yulia Alexeev</footer>
-    
+        </div>
+        <table class="game-board"></table> 
+    </div>      
+    <footer class="footer">Made By Yulia Alexeev</footer>
     <script src="js/game.js"></script>
     <script src="js/utils.js"></script>
 </body>

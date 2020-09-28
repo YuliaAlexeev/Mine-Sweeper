@@ -1,19 +1,18 @@
 'use strict';
 
-console.log('Hello :)');
-
 const MINE = '💣';
 const EMPTY = ' ';
 const MARK = '🚩';
-
 const SMILEY_DEFAULT = '🙂';
 const SMILEY_WIN = '😃';
 const SMILEY_LOSE = '😔';
+const LIVE = '💗';
 
 var gBoard;
 var gLevel;
 var gTimerInterval;
 var gElSmiley = document.querySelector('.smiley');
+var gLives;
 
 var gGame = {
     isOn: true,
@@ -26,7 +25,7 @@ var gGame = {
 function initGame(levelNum, mines) {
     initLevel(levelNum, mines);
     reset();
-    timerCount();
+    renderTimer();
 }
 
 function reset() {
@@ -35,7 +34,11 @@ function reset() {
     gBoard = buildBoard();
     renderBoard(gBoard);
     gElSmiley.innerText = SMILEY_DEFAULT;
-    //gGame.secsPassed = 0;
+    gLives = 3;
+    renderLives();
+    clearInterval(gTimerInterval);
+    gGame.secsPassed = 0;
+    renderTimer();
 }
 
 function initLevel(levelNum, mines) {
@@ -51,6 +54,7 @@ function createCell(minesAroundCount, isShown, isMine, isMarked) {
         isShown: isShown,
         isMine: isMine,
         isMarked: isMarked,
+        numOfClicks: 0,
     };
     return cell;
 }
@@ -115,28 +119,50 @@ function getCountOfMineNegs(board, pos) {
 }
 
 function cellClicked(elCell, i, j) {
-    
     if (gGame.isOn === true) {
-        elCell.classList.remove('hide');
-        gBoard[i][j].isShown = true;
-
+        var cellCount = gGame.shownCount;
+        if (gBoard[i][j].isMine) {
+            elCell.classList.add('is-mine');
+            setTimeout(function () {
+                elCell.classList.remove('is-mine');
+            }, 1000);
+            livesCount();
+        } else {
+            elCell.classList.remove('hide');
+            if (!gBoard[i][j].isShown) {
+                ++gGame.shownCount;
+                cellCount = gGame.shownCount;
+                if (cellCount === 1) {
+                    gTimerInterval = setInterval(timerCount, 1000);
+                }
+            }
+            gBoard[i][j].isShown = true;
+        }
         elCell.innerText = renderCell(gBoard[i][j]);
-        var cellCount = ++gGame.shownCount;
-        //console.log('show cells count', cellCount);
-
-        if ((gLevel.SIZE * gLevel.SIZE) - gLevel.MINES === cellCount) {
+        if (gLevel.SIZE * gLevel.SIZE - gLevel.MINES === cellCount) {
             isWin();
         }
-        if (gGame.shownCount === 1) {
-            gTimerInterval = setInterval(timerCount, 1000);
-        }
-        if (gBoard[i][j].isMine) {
-            gElSmiley.innerText = SMILEY_LOSE;
-            expandAllMines(gBoard);
-            renderBoard(gBoard);
-            checkGameOver();
-        }
     }
+}
+
+function livesCount() {
+    gLives--;
+    renderLives();
+}
+
+function renderLives() {
+    var htmlStr = '';
+    for (var i = 0; i < gLives; i++) {
+        htmlStr += '<span class="game-lives-heart">' + LIVE + '</span>';
+    }
+
+    if (gLives === 0) {
+        expandAllMines(gBoard);
+        renderBoard(gBoard);
+        checkGameOver();
+    }
+    var gElLives = document.querySelector('.game-lives');
+    gElLives.innerHTML = htmlStr;
 }
 
 function expandAllMines(board) {
@@ -151,7 +177,6 @@ function expandAllMines(board) {
 
 function cellMarked(elCell, i, j) {
     var markedToggle = (gBoard[i][j].isMarked = !gBoard[i][j].isMarked);
-    //console.log(markedToggle);
     if (gBoard[i][j].isMarked) {
         elCell.innerText = MARK;
     } else {
@@ -163,16 +188,18 @@ function cellMarked(elCell, i, j) {
         if (gGame.markedCount === gLevel.MINES) {
             isWin();
         }
-    } 
+    }
 }
 
 function isWin() {
     gElSmiley.innerText = SMILEY_WIN;
-    console.log('you win!');
     gGame.isOn = false;
+    console.log('You Win!');
+    clearInterval(gTimerInterval);
 }
 
 function checkGameOver() {
+    gElSmiley.innerText = SMILEY_LOSE;
     clearInterval(gTimerInterval);
     gGame.isOn = false;
     console.log('Game Over!');
@@ -194,6 +221,10 @@ function renderCell(cell) {
 
 function timerCount() {
     gGame.secsPassed++;
+    renderTimer();
+}
+
+function renderTimer() {
     var minutes = parseInt(gGame.secsPassed / 60);
     var seconds = parseInt(gGame.secsPassed % 60);
     minutes = minutes < 10 ? '0' + minutes : minutes;
